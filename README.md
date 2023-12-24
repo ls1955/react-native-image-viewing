@@ -1,32 +1,24 @@
+## Disclaimer
+
+This fork apply fixes for zoom issue after swiping on Android and inconsistent double tap zooming behavior from [this PR](https://github.com/jobtoday/react-native-image-viewing/pull/191) and [this PR](https://github.com/bluesky-social/social-app/pull/1482).
+
 # react-native-image-viewing
 
 > React Native modal component for viewing images as a sliding gallery.
 
-[![npm version](https://badge.fury.io/js/react-native-image-viewing.svg)](https://badge.fury.io/js/react-native-image-viewing)
-[![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
-
-- 🔥Pinch zoom for both iOS and Android
-- 🔥Double tap to zoom for both iOS and Android
-- 🔥Supports swipe-to-close animation
-- 🔥Custom header and footer components
-- 🔥Uses VirtualizedList to optimize image loading and rendering
-
-Try with Expo: https://expo.io/@antonkalinin/react-native-image-viewing
-
-<p align="center">
-  <img src="https://github.com/jobtoday/react-native-image-viewing/blob/master/demo.gif?raw=true" height="480" />
-</p>
-
 ## Installation
+Add this in your package.json:
 
-```bash
-yarn add react-native-image-viewing
+```js
+  "dependencies": {
+    "react-native-image-viewing": "git@github.com:ls1955/react-native-image-viewing.git"
+  }
 ```
 
-or
+Then:
 
 ```bash
-npm install --save react-native-image-viewing
+npm install
 ```
 
 ## Usage
