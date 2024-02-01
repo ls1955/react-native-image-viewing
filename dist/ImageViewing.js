@@ -9,7 +9,6 @@ import React, { useCallback, useRef, useEffect } from "react";
 import { Animated, Dimensions, StyleSheet, View, VirtualizedList, Modal, } from "react-native";
 import ImageItem from "./components/ImageItem/ImageItem";
 import ImageDefaultHeader from "./components/ImageDefaultHeader";
-import StatusBarManager from "./components/StatusBarManager";
 import useAnimatedComponents from "./hooks/useAnimatedComponents";
 import useImageIndexChange from "./hooks/useImageIndexChange";
 import useRequestClose from "./hooks/useRequestClose";
@@ -37,8 +36,8 @@ function ImageViewing({ images, keyExtractor, imageIndex, visible, onRequestClos
     if (!visible) {
         return null;
     }
-    return (<Modal transparent={presentationStyle === "overFullScreen"} visible={visible} presentationStyle={presentationStyle} animationType={animationType} onRequestClose={onRequestCloseEnhanced} supportedOrientations={["portrait"]} hardwareAccelerated>
-      <StatusBarManager presentationStyle={presentationStyle}/>
+    return (<Modal transparent={presentationStyle === "overFullScreen"} visible={visible} presentationStyle={presentationStyle} animationType={animationType} onRequestClose={onRequestCloseEnhanced} supportedOrientations={["portrait"]} hardwareAccelerated statusBarTranslucent={presentationStyle === "overFullScreen"}>
+      
       <View style={[styles.container, { opacity, backgroundColor }]}>
         <Animated.View style={[styles.header, { transform: headerTransform }]}>
           {typeof HeaderComponent !== "undefined" ? (React.createElement(HeaderComponent, {

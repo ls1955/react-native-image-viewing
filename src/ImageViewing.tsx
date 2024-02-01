@@ -101,8 +101,9 @@ function ImageViewing({
       onRequestClose={onRequestCloseEnhanced}
       supportedOrientations={["portrait"]}
       hardwareAccelerated
+      statusBarTranslucent={presentationStyle === "overFullScreen"}
     >
-      <StatusBarManager presentationStyle={presentationStyle} />
+      {/* <StatusBarManager presentationStyle={presentationStyle} /> */}
       <View style={[styles.container, { opacity, backgroundColor }]}>
         <Animated.View style={[styles.header, { transform: headerTransform }]}>
           {typeof HeaderComponent !== "undefined" ? (
