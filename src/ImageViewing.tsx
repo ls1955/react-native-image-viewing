@@ -8,8 +8,8 @@
 
 import React, { ComponentType, useCallback, useRef, useEffect } from "react";
 import {
-  Animated,
   Dimensions,
+  StatusBar,
   StyleSheet,
   View,
   VirtualizedList,
@@ -93,78 +93,62 @@ function ImageViewing({
   }
 
   return (
-    <Modal
-      transparent={presentationStyle === "overFullScreen"}
-      visible={visible}
-      presentationStyle={presentationStyle}
-      animationType={animationType}
-      onRequestClose={onRequestCloseEnhanced}
-      supportedOrientations={["portrait"]}
-      hardwareAccelerated
-      statusBarTranslucent
-    >
-      {/* <StatusBarManager presentationStyle={presentationStyle} /> */}
-      <View style={[styles.container, { opacity, backgroundColor }]}>
-        <Animated.View style={[styles.header, { transform: headerTransform }]}>
-          {typeof HeaderComponent !== "undefined" ? (
-            React.createElement(HeaderComponent, {
-              imageIndex: currentImageIndex,
-            })
-          ) : (
-            <ImageDefaultHeader onRequestClose={onRequestCloseEnhanced} />
-          )}
-        </Animated.View>
-        <VirtualizedList
-          ref={imageList}
-          data={images}
-          horizontal
-          pagingEnabled
-          windowSize={2}
-          initialNumToRender={1}
-          maxToRenderPerBatch={1}
-          showsHorizontalScrollIndicator={false}
-          showsVerticalScrollIndicator={false}
-          initialScrollIndex={imageIndex}
-          getItem={(_, index) => images[index]}
-          getItemCount={() => images.length}
-          getItemLayout={(_, index) => ({
-            length: SCREEN_WIDTH,
-            offset: SCREEN_WIDTH * index,
-            index,
-          })}
-          renderItem={({ item: imageSrc }) => (
-            <ImageItem
-              onZoom={onZoom}
-              imageSrc={imageSrc}
-              onRequestClose={onRequestCloseEnhanced}
-              onLongPress={onLongPress}
-              delayLongPress={delayLongPress}
-              swipeToCloseEnabled={swipeToCloseEnabled}
-              doubleTapToZoomEnabled={doubleTapToZoomEnabled}
-              currentImageIndex={currentImageIndex}
-            />
-          )}
-          onMomentumScrollEnd={onScroll}
-          //@ts-ignore
-          keyExtractor={(imageSrc, index) =>
-            keyExtractor
-              ? keyExtractor(imageSrc, index)
-              : typeof imageSrc === "number"
-              ? `${imageSrc}`
-              : imageSrc.uri
-          }
-        />
-        {typeof FooterComponent !== "undefined" && (
-          <Animated.View
-            style={[styles.footer, { transform: footerTransform }]}
-          >
-            {React.createElement(FooterComponent, {
-              imageIndex: currentImageIndex,
+    <View style={{flex: 1}}>
+      <StatusBar hidden />
+      <Modal
+        transparent
+        visible={visible}
+        presentationStyle={presentationStyle}
+        animationType={animationType}
+        onRequestClose={onRequestCloseEnhanced}
+        supportedOrientations={["portrait"]}
+        hardwareAccelerated
+        statusBarTranslucent
+      >
+        <View style={[styles.container, { opacity, backgroundColor }]}>
+          <VirtualizedList
+            ref={imageList}
+            data={images}
+            horizontal
+            pagingEnabled
+            windowSize={2}
+            initialNumToRender={1}
+            maxToRenderPerBatch={1}
+            showsHorizontalScrollIndicator={false}
+            showsVerticalScrollIndicator={false}
+            initialScrollIndex={imageIndex}
+            getItem={(_, index) => images[index]}
+            getItemCount={() => images.length}
+            getItemLayout={(_, index) => ({
+              length: SCREEN_WIDTH,
+              offset: SCREEN_WIDTH * index,
+              index,
             })}
-          </Animated.View>
-        )}
-      </View>
-    </Modal>
+            renderItem={({ item: imageSrc }) => (
+              <ImageItem
+                onZoom={onZoom}
+                imageSrc={imageSrc}
+                onRequestClose={onRequestCloseEnhanced}
+                onLongPress={onLongPress}
+                delayLongPress={delayLongPress}
+                swipeToCloseEnabled={swipeToCloseEnabled}
+                doubleTapToZoomEnabled={doubleTapToZoomEnabled}
+                currentImageIndex={currentImageIndex}
+              />
+            )}
+            onMomentumScrollEnd={onScroll}
+            //@ts-ignore
+            keyExtractor={(imageSrc, index) =>
+              keyExtractor
+                ? keyExtractor(imageSrc, index)
+                : typeof imageSrc === "number"
+                ? `${imageSrc}`
+                : imageSrc.uri
+            }
+          />
+        </View>
+      </Modal>
+    </View>
   );
 }
 
