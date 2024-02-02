@@ -42,5 +42,8 @@
     "react": "16.9.0",
     "react-native": "0.61.5",
     "typescript": "3.7.2"
+  },
+  "dependencies": {
+    "react-native-modalbox": "^2.0.2"
   }
 }

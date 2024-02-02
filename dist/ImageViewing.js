@@ -6,7 +6,8 @@
  *
  */
 import React, { useCallback, useRef, useEffect } from "react";
-import { Dimensions, StatusBar, StyleSheet, View, VirtualizedList, Modal, } from "react-native";
+import { Dimensions, StatusBar, StyleSheet, View, VirtualizedList, } from "react-native";
+import Modal from "react-native-modalbox";
 import ImageItem from "./components/ImageItem/ImageItem";
 import useAnimatedComponents from "./hooks/useAnimatedComponents";
 import useImageIndexChange from "./hooks/useImageIndexChange";
@@ -35,11 +36,10 @@ function ImageViewing({ images, keyExtractor, imageIndex, visible, onRequestClos
     if (!visible) {
         return null;
     }
-    return (<View style={{ flex: 1 }}>
+    return (<Modal startOpen swipeToClose={false}>
       <StatusBar hidden/>
-      <Modal transparent visible={visible} presentationStyle={presentationStyle} animationType={animationType} onRequestClose={onRequestCloseEnhanced} supportedOrientations={["portrait"]} hardwareAccelerated statusBarTranslucent>
-        <View style={[styles.container, { opacity, backgroundColor }]}>
-          <VirtualizedList ref={imageList} data={images} horizontal pagingEnabled windowSize={2} initialNumToRender={1} maxToRenderPerBatch={1} showsHorizontalScrollIndicator={false} showsVerticalScrollIndicator={false} initialScrollIndex={imageIndex} getItem={(_, index) => images[index]} getItemCount={() => images.length} getItemLayout={(_, index) => ({
+      <View style={[styles.container, { opacity, backgroundColor }]}>
+        <VirtualizedList ref={imageList} data={images} horizontal pagingEnabled windowSize={2} initialNumToRender={1} maxToRenderPerBatch={1} showsHorizontalScrollIndicator={false} showsVerticalScrollIndicator={false} initialScrollIndex={imageIndex} getItem={(_, index) => images[index]} getItemCount={() => images.length} getItemLayout={(_, index) => ({
         length: SCREEN_WIDTH,
         offset: SCREEN_WIDTH * index,
         index,
@@ -50,9 +50,8 @@ function ImageViewing({ images, keyExtractor, imageIndex, visible, onRequestClos
         : typeof imageSrc === "number"
             ? `${imageSrc}`
             : imageSrc.uri}/>
-        </View>
-      </Modal>
-    </View>);
+      </View>
+    </Modal>);
 }
 const styles = StyleSheet.create({
     container: {

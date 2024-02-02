@@ -14,8 +14,8 @@ import {
   View,
   VirtualizedList,
   ModalProps,
-  Modal,
 } from "react-native";
+import Modal from "react-native-modalbox";
 
 import ImageItem from "./components/ImageItem/ImageItem";
 import ImageDefaultHeader from "./components/ImageDefaultHeader";
@@ -93,62 +93,51 @@ function ImageViewing({
   }
 
   return (
-    <View style={{flex: 1}}>
+    <Modal startOpen swipeToClose={false}>
       <StatusBar hidden />
-      <Modal
-        transparent
-        visible={visible}
-        presentationStyle={presentationStyle}
-        animationType={animationType}
-        onRequestClose={onRequestCloseEnhanced}
-        supportedOrientations={["portrait"]}
-        hardwareAccelerated
-        statusBarTranslucent
-      >
-        <View style={[styles.container, { opacity, backgroundColor }]}>
-          <VirtualizedList
-            ref={imageList}
-            data={images}
-            horizontal
-            pagingEnabled
-            windowSize={2}
-            initialNumToRender={1}
-            maxToRenderPerBatch={1}
-            showsHorizontalScrollIndicator={false}
-            showsVerticalScrollIndicator={false}
-            initialScrollIndex={imageIndex}
-            getItem={(_, index) => images[index]}
-            getItemCount={() => images.length}
-            getItemLayout={(_, index) => ({
-              length: SCREEN_WIDTH,
-              offset: SCREEN_WIDTH * index,
-              index,
-            })}
-            renderItem={({ item: imageSrc }) => (
-              <ImageItem
-                onZoom={onZoom}
-                imageSrc={imageSrc}
-                onRequestClose={onRequestCloseEnhanced}
-                onLongPress={onLongPress}
-                delayLongPress={delayLongPress}
-                swipeToCloseEnabled={swipeToCloseEnabled}
-                doubleTapToZoomEnabled={doubleTapToZoomEnabled}
-                currentImageIndex={currentImageIndex}
-              />
-            )}
-            onMomentumScrollEnd={onScroll}
-            //@ts-ignore
-            keyExtractor={(imageSrc, index) =>
-              keyExtractor
-                ? keyExtractor(imageSrc, index)
-                : typeof imageSrc === "number"
-                ? `${imageSrc}`
-                : imageSrc.uri
-            }
-          />
-        </View>
-      </Modal>
-    </View>
+      <View style={[styles.container, { opacity, backgroundColor }]}>
+        <VirtualizedList
+          ref={imageList}
+          data={images}
+          horizontal
+          pagingEnabled
+          windowSize={2}
+          initialNumToRender={1}
+          maxToRenderPerBatch={1}
+          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
+          initialScrollIndex={imageIndex}
+          getItem={(_, index) => images[index]}
+          getItemCount={() => images.length}
+          getItemLayout={(_, index) => ({
+            length: SCREEN_WIDTH,
+            offset: SCREEN_WIDTH * index,
+            index,
+          })}
+          renderItem={({ item: imageSrc }) => (
+            <ImageItem
+              onZoom={onZoom}
+              imageSrc={imageSrc}
+              onRequestClose={onRequestCloseEnhanced}
+              onLongPress={onLongPress}
+              delayLongPress={delayLongPress}
+              swipeToCloseEnabled={swipeToCloseEnabled}
+              doubleTapToZoomEnabled={doubleTapToZoomEnabled}
+              currentImageIndex={currentImageIndex}
+            />
+          )}
+          onMomentumScrollEnd={onScroll}
+          //@ts-ignore
+          keyExtractor={(imageSrc, index) =>
+            keyExtractor
+              ? keyExtractor(imageSrc, index)
+              : typeof imageSrc === "number"
+              ? `${imageSrc}`
+              : imageSrc.uri
+          }
+        />
+      </View>
+    </Modal>
   );
 }
 
